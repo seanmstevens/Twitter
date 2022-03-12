@@ -16,8 +16,8 @@ The following **required** functionality is completed:
 
 The following **bonus** features are implemented:
 
-- [ ] User can pull to refresh. (1pt)
-- [ ] User can load past tweets infinitely. (2pts)
+- [x] User can pull to refresh. (1pt)
+- [x] User can load past tweets infinitely. (2pts)
 
 ## Video Walkthrough
 
@@ -25,3 +25,8 @@ Here's a walkthrough of implemented user stories:
 
 <img src='demo.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
 
+Here's a walkthrough showing the pull to refresh and infinite scroll features.
+I ended up hitting the API rate limit in this recording and didn't have time to
+record another version once the limit window reset:
+
+<img src='demo2.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />

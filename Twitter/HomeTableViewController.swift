@@ -16,9 +16,10 @@ class HomeTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loadTweets()
-
+        
+        tableView.refreshControl = UIRefreshControl()
+        tableView.refreshControl?.addTarget(self, action: #selector(loadTweets), for: .valueChanged)
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -27,11 +28,35 @@ class HomeTableViewController: UITableViewController {
         
     }
     
-    func loadTweets() {
-        let url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-        let params = ["count": 10]
+    @objc func loadTweets() {
+        tweetsCount = 20
         
-        TwitterAPICaller.client?.getDictionariesRequest(url: url, parameters: params, success: { tweets in
+        let url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        let params = ["count": tweetsCount]
+        
+        TwitterAPICaller.client?.getDictionariesRequest(url: url, parameters: params as [String : Any], success: { tweets in
+            self.tweets.removeAll()
+            
+            for tweet in tweets {
+                self.tweets.append(tweet)
+            }
+            
+            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.refreshControl?.endRefreshing()
+            }
+            
+        }, failure: { error in
+            print("Could not retrieve tweets: \(error.localizedDescription)")
+        })
+    }
+    
+    func loadMoreTweets() {
+        let url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
+        tweetsCount += 20
+        let params = ["count": tweetsCount]
+        
+        TwitterAPICaller.client?.getDictionariesRequest(url: url, parameters: params as [String : Any], success: { tweets in
             self.tweets.removeAll()
             
             for tweet in tweets {
@@ -44,7 +69,13 @@ class HomeTableViewController: UITableViewController {
             print("Could not retrieve tweets: \(error.localizedDescription)")
         })
     }
-
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if indexPath.row + 1 == tweets.count {
+            loadMoreTweets()
+        }
+    }
+    
     @IBAction func onLogout(_ sender: UIButton) {
         TwitterAPICaller.client?.logout()
         UserDefaults.standard.set(false, forKey: "loggedIn")
