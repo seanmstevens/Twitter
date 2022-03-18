@@ -16,17 +16,14 @@ class LoginViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        if UserDefaults.standard.bool(forKey: "loggedIn") {
-            self.performSegue(withIdentifier: "loginToHome", sender: self)
-        }
-    }
-    
     @IBAction func onLoginButton(_ sender: UIButton) {
         let url = "https://api.twitter.com/oauth/request_token"
         TwitterAPICaller.client?.login(url: url, success: {
             UserDefaults.standard.set(true, forKey: "loggedIn")
-            self.performSegue(withIdentifier: "loginToHome", sender: self)
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let homeNavigationController = storyboard.instantiateViewController(withIdentifier: "HomeNavigationController")
+
+            (UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate)?.changeRootViewController(homeNavigationController)
         }, failure: { error in
             print("Unable to login: \(error)")
         })
