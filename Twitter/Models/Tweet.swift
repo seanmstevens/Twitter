@@ -13,6 +13,10 @@ struct Tweet: Identifiable, Codable, Hashable {
     var content: String
     var createdAt: Date
     var user: User
+    var favorited: Bool
+    var retweeted: Bool
+    var favoriteCount: Int
+    var retweetCount: Int
     
     static func initWithDictionary(with data: NSDictionary) -> Self {
         let user = data["user"] as! NSDictionary
@@ -24,7 +28,12 @@ struct Tweet: Identifiable, Codable, Hashable {
             user: Tweet.User(
                 name: user["name"] as! String,
                 screenName: user["screen_name"] as! String,
-                profileImageUrl: URL(string: (user["profile_image_url_https"] as! String))!))
+                profileImageUrl: URL(string: (user["profile_image_url_https"] as! String))!),
+            favorited: data["favorited"] as! Bool,
+            retweeted: data["retweeted"] as! Bool,
+            favoriteCount: data["favorite_count"] as! Int,
+            retweetCount: data["retweet_count"] as! Int
+        )
     }
 }
 
@@ -34,6 +43,10 @@ extension Tweet {
         case content = "text"
         case createdAt
         case user
+        case favorited
+        case retweeted
+        case favoriteCount
+        case retweetCount
     }
     
     struct User: Codable, Hashable {

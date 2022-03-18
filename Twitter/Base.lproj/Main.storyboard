@@ -132,38 +132,77 @@
                                             <color key="textColor" red="0.058823529411764705" green="0.078431372549019607" blue="0.098039215686274508" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-5C-sbX" userLabel="Actions Stack View">
-                                            <rect key="frame" x="298" y="123" width="96" height="28"/>
+                                        <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="Yh1-5C-sbX" userLabel="Actions Stack View">
+                                            <rect key="frame" x="230" y="123" width="164" height="28"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEU-1W-u2Z" userLabel="Retweet">
-                                                    <rect key="frame" x="0.0" y="0.0" width="44" height="28"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VFi-mD-bDx">
+                                                    <rect key="frame" x="0.0" y="0.0" width="80" height="28"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AEU-1W-u2Z" userLabel="Retweet">
+                                                            <rect key="frame" x="0.0" y="0.0" width="36" height="28"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="36" id="dLG-ZS-heW"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="tintColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <imageReference key="image" image="arrow.2.squarepath" catalog="system" symbolScale="default"/>
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="default" weight="regular"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="onRetweet:" destination="uvQ-Gv-HCK" eventType="touchUpInside" id="h7B-Aa-lpD"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="44" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgB-S2-8Xa">
+                                                            <rect key="frame" x="36" y="0.0" width="44" height="28"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="LI7-jA-UzD"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="44" id="dLG-ZS-heW"/>
+                                                        <constraint firstItem="dgB-S2-8Xa" firstAttribute="top" secondItem="VFi-mD-bDx" secondAttribute="top" id="6Qv-vD-oQa"/>
+                                                        <constraint firstItem="dgB-S2-8Xa" firstAttribute="leading" secondItem="AEU-1W-u2Z" secondAttribute="trailing" id="P38-g2-bs1"/>
                                                     </constraints>
-                                                    <color key="tintColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="arrow.2.squarepath" catalog="system" symbolScale="default"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="default" weight="regular"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="onRetweet:" destination="uvQ-Gv-HCK" eventType="touchUpInside" id="h7B-Aa-lpD"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpQ-PS-7lU" userLabel="Like">
-                                                    <rect key="frame" x="52" y="0.0" width="44" height="28"/>
+                                                </stackView>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sfQ-IO-OmL">
+                                                    <rect key="frame" x="84" y="0.0" width="80" height="28"/>
+                                                    <subviews>
+                                                        <button opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TpQ-PS-7lU" userLabel="Favorite">
+                                                            <rect key="frame" x="0.0" y="0.0" width="36" height="28"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="36" id="4ea-N1-n4h"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="tintColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <imageReference key="image" image="heart" catalog="system" symbolScale="default"/>
+                                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="default" weight="regular"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="onLike:" destination="uvQ-Gv-HCK" eventType="touchUpInside" id="BUU-QI-B4O"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="118" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="haq-ID-AYA">
+                                                            <rect key="frame" x="36" y="0.0" width="44" height="28"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="44" id="QD8-dP-Bix"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                            <color key="textColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="44" id="4ea-N1-n4h"/>
+                                                        <constraint firstItem="haq-ID-AYA" firstAttribute="leading" secondItem="TpQ-PS-7lU" secondAttribute="trailing" id="FaZ-ck-CyG"/>
                                                     </constraints>
-                                                    <color key="tintColor" red="0.32549019610000002" green="0.3921568627" blue="0.4431372549" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                    <state key="normal">
-                                                        <imageReference key="image" image="heart" catalog="system" symbolScale="default"/>
-                                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="18" scale="default" weight="regular"/>
-                                                    </state>
-                                                    <connections>
-                                                        <action selector="onLike:" destination="uvQ-Gv-HCK" eventType="touchUpInside" id="BUU-QI-B4O"/>
-                                                    </connections>
-                                                </button>
+                                                </stackView>
                                             </subviews>
                                         </stackView>
                                     </subviews>
@@ -187,10 +226,12 @@
                                 <size key="customSize" width="414" height="163"/>
                                 <connections>
                                     <outlet property="contentLabel" destination="hDB-MC-Slx" id="5mt-xR-6FC"/>
-                                    <outlet property="likeButton" destination="TpQ-PS-7lU" id="vEq-TA-PJE"/>
+                                    <outlet property="favoriteButton" destination="TpQ-PS-7lU" id="L8E-jB-5hz"/>
+                                    <outlet property="favoriteCountLabel" destination="haq-ID-AYA" id="kHb-JT-FmG"/>
                                     <outlet property="nameLabel" destination="bXd-sM-rFY" id="5Ib-85-ykY"/>
                                     <outlet property="profileImageView" destination="3us-sK-Eb6" id="S9Y-Zw-xRt"/>
                                     <outlet property="retweetButton" destination="AEU-1W-u2Z" id="F7a-eR-fjY"/>
+                                    <outlet property="retweetCountLabel" destination="dgB-S2-8Xa" id="FtI-Qr-7j1"/>
                                     <outlet property="timeLabel" destination="NsM-Ep-J9b" id="aan-Mb-bxA"/>
                                     <outlet property="usernameLabel" destination="YEg-Xa-AUb" id="B9U-0b-N3q"/>
                                 </connections>

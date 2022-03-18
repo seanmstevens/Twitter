@@ -13,6 +13,7 @@
 		570FE5B027E41CA700615360 /* ComposeTweetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FE5AF27E41CA700615360 /* ComposeTweetViewController.swift */; };
 		570FE5B627E430FC00615360 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 570FE5B527E430FC00615360 /* SceneDelegate.swift */; };
 		5794455327E4463800AAD091 /* HomeCollectionViewController+NavbarCustomization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5794455227E4463800AAD091 /* HomeCollectionViewController+NavbarCustomization.swift */; };
+		5794455527E5109600AAD091 /* UIColor+Twitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5794455427E5109600AAD091 /* UIColor+Twitter.swift */; };
 		5797B52027D5C51C0019B92C /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797B51F27D5C51C0019B92C /* LoginViewController.swift */; };
 		5797B52227D5ED370019B92C /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797B52127D5ED370019B92C /* HomeCollectionViewController.swift */; };
 		5797B52427D68FCF0019B92C /* TweetCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5797B52327D68FCF0019B92C /* TweetCell.swift */; };
@@ -29,6 +30,7 @@
 		570FE5AF27E41CA700615360 /* ComposeTweetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeTweetViewController.swift; sourceTree = "<group>"; };
 		570FE5B527E430FC00615360 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		5794455227E4463800AAD091 /* HomeCollectionViewController+NavbarCustomization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeCollectionViewController+NavbarCustomization.swift"; sourceTree = "<group>"; };
+		5794455427E5109600AAD091 /* UIColor+Twitter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Twitter.swift"; sourceTree = "<group>"; };
 		5797B51F27D5C51C0019B92C /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		5797B52127D5ED370019B92C /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
 		5797B52327D68FCF0019B92C /* TweetCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TweetCell.swift; sourceTree = "<group>"; };
@@ -84,6 +86,7 @@
 			isa = PBXGroup;
 			children = (
 				570FE5AC27E2838300615360 /* Tweet.swift */,
+				5794455427E5109600AAD091 /* UIColor+Twitter.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5797B52227D5ED370019B92C /* HomeCollectionViewController.swift in Sources */,
+				5794455527E5109600AAD091 /* UIColor+Twitter.swift in Sources */,
 				5797B52027D5C51C0019B92C /* LoginViewController.swift in Sources */,
 				5797B52427D68FCF0019B92C /* TweetCell.swift in Sources */,
 				570FE5AD27E2838300615360 /* Tweet.swift in Sources */,

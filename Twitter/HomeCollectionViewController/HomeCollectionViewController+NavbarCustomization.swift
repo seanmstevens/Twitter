@@ -23,7 +23,7 @@ extension HomeCollectionViewController {
         
         // Configuration for scroll edge appearance (when content has not been scrolled)
         navbarScrollEdgeAppearance.configureWithOpaqueBackground()
-        navbarScrollEdgeAppearance.backgroundColor = UIColor(hue: 206/360, saturation: 0.64, brightness: 0.93, alpha: 1.0)
+        navbarScrollEdgeAppearance.backgroundColor = .twitterBlue
         navbarScrollEdgeAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         navbarScrollEdgeAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
         

@@ -17,19 +17,27 @@ class TweetCell: UICollectionViewCell {
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var contentLabel: UILabel!
     @IBOutlet weak var retweetButton: UIButton!
-    @IBOutlet weak var likeButton: UIButton!
+    @IBOutlet weak var retweetCountLabel: UILabel!
+    @IBOutlet weak var favoriteButton: UIButton!
+    @IBOutlet weak var favoriteCountLabel: UILabel!
     
     var tweet: Tweet! {
         didSet {
-            profileImageView.makeRounded()
-            
-            // Configure the cell...
             nameLabel.text = tweet.user.name
             usernameLabel.text = "@" + tweet.user.screenName
             timeLabel.text = getRelativeTimeString(from: tweet.createdAt)
             contentLabel.text = tweet.content
             profileImageView.af_setImage(withURL: tweet.user.profileImageUrl, imageTransition: .crossDissolve(0.2))
+            profileImageView.makeRounded()
+            
+            setRetweetButtonAppearance()
+            setFavoriteButtonAppearance()
         }
+    }
+    
+    convenience init(with tweet: Tweet) {
+        self.init()
+        self.tweet = tweet
     }
     
     override func awakeFromNib() {
@@ -39,12 +47,70 @@ class TweetCell: UICollectionViewCell {
     }
     
     @IBAction func onRetweet(_ sender: UIButton) {
-        sender.tintColor = UIColor(red: 1/255, green: 186/255, blue: 124/255, alpha: 1)
+        if tweet.retweeted {
+            TwitterAPICaller.client?.unretweetTweet(tweetId: tweet.id, success: {
+                self.tweet.retweeted.toggle()
+                self.tweet.retweetCount -= 1
+            }, failure: { error in
+                print("Unable to retweet tweet: \(error.localizedDescription)")
+            })
+        } else {
+            TwitterAPICaller.client?.retweetTweet(tweetId: tweet.id, success: {
+                self.tweet.retweeted.toggle()
+                self.tweet.retweetCount += 1
+            }, failure: { error in
+                print("Unable to retweet tweet: \(error.localizedDescription)")
+            })
+        }
     }
     
     @IBAction func onLike(_ sender: UIButton) {
-        sender.setImage(UIImage(systemName: "heart.fill"), for: .normal)
-        sender.tintColor = UIColor(red: 250/255, green: 24/255, blue: 128/255, alpha: 1)
+        if tweet.favorited {
+            TwitterAPICaller.client?.unfavoriteTweet(tweetId: tweet.id, success: {
+                self.tweet.favorited.toggle()
+                self.tweet.favoriteCount -= 1
+            }, failure: { error in
+                print("Unable to unfavorite tweet: \(error.localizedDescription)")
+            })
+        } else {
+            TwitterAPICaller.client?.favoriteTweet(tweetId: tweet.id, success: {
+                self.tweet.favorited.toggle()
+                self.tweet.favoriteCount += 1
+            }, failure: { error in
+                print("Unable to favorite tweet: \(error.localizedDescription)")
+            })
+        }
+    }
+    
+    func setRetweetButtonAppearance() {
+        var symbolConfiguration: UIImage.SymbolConfiguration
+        
+        if tweet.retweeted {
+            symbolConfiguration = .init(weight: .bold)
+            retweetButton.tintColor = .twitterGreen
+            retweetCountLabel.textColor = .twitterGreen
+        } else {
+            symbolConfiguration = .init(weight: .regular)
+            retweetButton.tintColor = .twitterGray
+            retweetCountLabel.textColor = .twitterGray
+        }
+        
+        retweetButton.setPreferredSymbolConfiguration(symbolConfiguration, forImageIn: .normal)
+        retweetCountLabel.text = String(tweet.retweetCount)
+    }
+    
+    func setFavoriteButtonAppearance() {
+        if tweet.favorited {
+            favoriteButton.setImage(UIImage(systemName: "heart.fill"), for: .normal)
+            favoriteButton.tintColor = .twitterRed
+            favoriteCountLabel.textColor = .twitterRed
+        } else {
+            favoriteButton.setImage(UIImage(systemName: "heart"), for: .normal)
+            favoriteButton.tintColor = .twitterGray
+            favoriteCountLabel.textColor = .twitterGray
+        }
+        
+        favoriteCountLabel.text = String(tweet.favoriteCount)
     }
     
 }
