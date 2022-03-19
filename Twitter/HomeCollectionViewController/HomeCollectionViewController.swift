@@ -123,7 +123,7 @@ extension HomeCollectionViewController {
             }
 
             let url = "https://api.twitter.com/1.1/statuses/home_timeline.json"
-            var params: [String: Any] = ["count": tweetsToRetrieve]
+            var params: [String: Any] = ["count": tweetsToRetrieve, "tweet_mode": "extended"]
             
             if let minId = minId {
                 params["since_id"] = minId
@@ -137,6 +137,8 @@ extension HomeCollectionViewController {
                 
                 for data in tweets {
                     let tweet = Tweet.initWithDictionary(with: data)
+                    
+                    print(data)
                     
                     if minId != nil {
                         self.tweets.insert(tweet, at: insertPoint)

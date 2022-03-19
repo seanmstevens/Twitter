@@ -32,18 +32,29 @@ class TweetCell: UICollectionViewCell {
             
             setRetweetButtonAppearance()
             setFavoriteButtonAppearance()
+            
+            if let media = tweet.media {
+                if !media.isEmpty { createMediaView(with: media) }
+            }
         }
-    }
-    
-    convenience init(with tweet: Tweet) {
-        self.init()
-        self.tweet = tweet
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         self.backgroundColor = UIColor.white
+    }
+    
+    private func createMediaView(with media: [Tweet.Media]) {
+//        let collectionView = UICollectionView(frame: contentView.bounds, collectionViewLayout: generateLayout(for: media)!)
+//        
+//        collectionView.dataSource = self
+//        collectionView.delegate = self
+//        
+//        collectionView.isScrollEnabled = false
+//        
+//        collectionView.register(PhotoItemCell.self, forCellWithReuseIdentifier: PhotoItemCell.reuseIdentifier)
+//        contentView.addSubview(collectionView)
     }
     
     @IBAction func onRetweet(_ sender: UIButton) {
@@ -123,6 +134,122 @@ extension TweetCell {
         
         let relativeDate = formatter.localizedString(for: date, relativeTo: Date())
         return relativeDate
+    }
+}
+
+extension TweetCell: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return tweet.media?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if let cell = collectionView.dequeueReusableCell(withReuseIdentifier: PhotoItemCell.reuseIdentifier, for: indexPath) as? PhotoItemCell {
+            let mediaItem = tweet.media?[indexPath.item]
+            
+
+            let photoItem = UIImageView(frame: cell.contentView.bounds)
+            photoItem.translatesAutoresizingMaskIntoConstraints = false
+            
+            photoItem.contentMode = .scaleAspectFill
+            photoItem.af_setImage(withURL: mediaItem!.imageUrl, imageTransition: .crossDissolve(0.2))
+            cell.addSubview(photoItem)
+            
+            return cell
+        }
+        
+        return UICollectionViewCell()
+    }
+    
+    
+    
+    private func generateLayout(for media: [Tweet.Media]) -> UICollectionViewLayout? {
+        let insets = NSDirectionalEdgeInsets(top: 2, leading: 2, bottom: 2, trailing: 2)
+        
+        // Single photo case
+        let fullPhotoItem = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(2/3)))
+        fullPhotoItem.contentInsets = insets
+        
+        let singleItemGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(1.0)),
+            subitem: fullPhotoItem,
+            count: 1)
+        
+        // 2-photo case
+        let pairItem = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1/2),
+                heightDimension: .fractionalHeight(1.0)))
+        pairItem.contentInsets = insets
+
+        let pairGroup = NSCollectionLayoutGroup.horizontal(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(1/3)),
+            subitems: [pairItem, pairItem])
+        
+        // 3-photo case
+        let mainItem = NSCollectionLayoutItem(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(2/3),
+                heightDimension: .fractionalHeight(1.0)))
+        mainItem.contentInsets = insets
+
+        let pairSupplementaryItem = NSCollectionLayoutItem(
+          layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalHeight(0.5)))
+        pairSupplementaryItem.contentInsets = insets
+
+        let trailingGroup = NSCollectionLayoutGroup.vertical(
+          layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1/3),
+            heightDimension: .fractionalHeight(1.0)),
+          subitem: pairSupplementaryItem,
+          count: 2)
+
+        let mainWithPairGroup = NSCollectionLayoutGroup.horizontal(
+          layoutSize: NSCollectionLayoutSize(
+            widthDimension: .fractionalWidth(1.0),
+            heightDimension: .fractionalWidth(4/9)),
+          subitems: [mainItem, trailingGroup])
+        
+        // 4-photo case
+        let quadGroup = NSCollectionLayoutGroup.vertical(
+            layoutSize: NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .fractionalWidth(2/3)),
+            subitems: [pairGroup, pairGroup])
+        
+        switch media.count {
+        case 1:
+            print("1 media item")
+            
+            let section = NSCollectionLayoutSection(group: singleItemGroup)
+            return UICollectionViewCompositionalLayout(section: section)
+        case 2:
+            print("2 media items")
+            
+            let section = NSCollectionLayoutSection(group: pairGroup)
+            return UICollectionViewCompositionalLayout(section: section)
+        case 3:
+            print("3 media items")
+            
+            let section = NSCollectionLayoutSection(group: mainWithPairGroup)
+            return UICollectionViewCompositionalLayout(section: section)
+        case 4:
+            print("4 media items")
+            
+            let section = NSCollectionLayoutSection(group: quadGroup)
+            return UICollectionViewCompositionalLayout(section: section)
+        default:
+            print("Unsupported layout!")
+            return nil
+        }
     }
 }
 

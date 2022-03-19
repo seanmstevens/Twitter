@@ -17,13 +17,25 @@ struct Tweet: Identifiable, Codable, Hashable {
     var retweeted: Bool
     var favoriteCount: Int
     var retweetCount: Int
+    var media: [Media]?
     
     static func initWithDictionary(with data: NSDictionary) -> Self {
         let user = data["user"] as! NSDictionary
+        let mediaDictionaries = (
+            (data["extended_entities"] as? NSDictionary)?["media"] as? [NSDictionary])?
+            .filter({ dict in
+                return (dict["type"] as! String) == "photo"
+            })
+        let displayIndices = data["display_text_range"] as! [Int]
+        let fullText = data["full_text"] as! String
+        
+        let displayText = fullText
+            .dropFirst(displayIndices[0])
+            .dropLast(fullText.utf16.count - displayIndices[1])
         
         return Tweet(
             id: data["id_str"] as! String,
-            content: data["text"] as! String,
+            content: String(displayText),
             createdAt: convertDate(from: data["created_at"] as! String)!,
             user: Tweet.User(
                 name: user["name"] as! String,
@@ -32,7 +44,10 @@ struct Tweet: Identifiable, Codable, Hashable {
             favorited: data["favorited"] as! Bool,
             retweeted: data["retweeted"] as! Bool,
             favoriteCount: data["favorite_count"] as! Int,
-            retweetCount: data["retweet_count"] as! Int
+            retweetCount: data["retweet_count"] as! Int,
+            media: mediaDictionaries?.map({ dict in
+                return Media.initWithDictionary(with: dict)
+            })
         )
     }
 }
@@ -47,6 +62,7 @@ extension Tweet {
         case retweeted
         case favoriteCount
         case retweetCount
+        case media
     }
     
     struct User: Codable, Hashable {
@@ -73,5 +89,18 @@ extension Tweet {
         }
         
         return convertedDate
+    }
+}
+
+extension Tweet {
+    struct Media: Identifiable, Codable, Hashable {
+        var id: String
+        var imageUrl: URL
+        
+        static func initWithDictionary(with data: NSDictionary) -> Media {
+            return Media(
+                id: data["id_str"] as! String,
+                imageUrl: URL(string: data["media_url_https"] as! String)!)
+        }
     }
 }
